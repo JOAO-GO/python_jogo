@@ -14,8 +14,10 @@ fonte_quadrinhos = pygame.font.SysFont('Comic Sans Ms', 100) #importar
 running = True #variavel de controle do status do jogo
 
 personagem_x = fonte_quadrinhos.render('x', True, 'red')
-personagem_y = fonte_quadrinhos.render('o', True, 'red')
-cor_fundo = 1
+personagem_y = fonte_quadrinhos.render('o', True, 'green')
+apresenta_personagem = 0
+x = 0
+y = 0
 
 while running:
     # controle de evento do jogo
@@ -25,18 +27,52 @@ while running:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             print('Clicou')
-            cor_fundo = cor_fundo + 1
-            if(cor_fundo > 3):
-                cor_fundo = 1
+            click_pos = pygame.mouse.get_pos() # a posicao do mouse quando houve o evento de click 
+            print('eixo x:', click_pos[0])
+            print('eixo y:', click_pos[1])     
+            x = click_pos[0]
+            y = click_pos[1]
+            apresenta_personagem = apresenta_personagem + 1
+            if(apresenta_personagem > 10):
+                screen.fill('black')
+                apresenta_personagem = 0
+
  # desenha tabuleiro
+
     pygame.draw.line(screen, 'white',(200, 0,), (200, 600), 10)
     pygame.draw.line(screen, 'white',(400, 0,), (400, 600), 10)
     pygame.draw.line(screen, 'white',(0, 200,), (600, 200), 10)
     pygame.draw.line(screen, 'white',(0, 400,), (600, 400), 10)
 
-    screen.blit(personagem_x,(60,30)) #primeiro
-    screen.blit(personagem_y,(260,30)) #segundo
-    screen.blit(personagem_y,(460,30)) #segundo
+    #primeira linha
+    #
+    #                              x  y
+    if x > 0 and x < 200 and y < 200:
+        screen.blit(personagem_x,(70,20)) #primeiro
+
+    elif x >=  200 and x < 400 and y < 200:
+        screen.blit(personagem_y,(270,20)) #segundo
+
+    elif x >= 400 and y < 200:
+        screen.blit(personagem_y,(470,20)) #terceiro   
+
+    elif x < 200 and y >= 200 and y < 400:
+        screen.blit(personagem_x,(70,220)) #quarto
+
+    elif x >= 200 and x < 400 and y >= 200 and y < 400:
+        screen.blit(personagem_y,(270,220)) #quinto
+
+    elif x >= 400 and y >= 200 and y < 400:
+        screen.blit(personagem_y,(470,220)) #sexto
+
+    elif x < 200 and y >= 400:
+        screen.blit(personagem_x,(70,420)) #setimo
+
+    elif x >= 200 and x < 400 and y >= 400:
+        screen.blit(personagem_y,(270,420)) #oitavo
+
+    elif x >= 400 and y >= 400:
+        screen.blit(personagem_y,(470,420)) #nono
     
     # flip() the display to put your work on screen
     pygame.display.flip()

@@ -1,4 +1,4 @@
-# Example file showing a basic pygame "game loop"
+# Ecoordenada_xample file showing a basic pygame "game loop"
 import pygame
 
 
@@ -14,28 +14,44 @@ fonte_quadrinhos = pygame.font.SysFont('Comic Sans Ms', 100) #importar
 running = True #variavel de controle do status do jogo
 
 personagem_x = fonte_quadrinhos.render('x', True, 'red')
-personagem_y = fonte_quadrinhos.render('o', True, 'green')
-apresenta_personagem = 0
-x = 0
-y = 0
+personagem_o = fonte_quadrinhos.render('o', True, 'green')
+
+jogador_atual = personagem_x # inicializa com x
+
+rodadas = 0
+
+coordenada_x = 0
+coordenada_y = 0
+
 
 while running:
     # controle de evento do jogo
     for event in pygame.event.get():
-    # pygame.QUIT significa que quando usuario clicar x a tela fechará
+    # pygame.QUIT significa que quando usuario clicar coordenada_x a tela fechará
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             print('Clicou')
             click_pos = pygame.mouse.get_pos() # a posicao do mouse quando houve o evento de click 
-            print('eixo x:', click_pos[0])
-            print('eixo y:', click_pos[1])     
-            x = click_pos[0]
-            y = click_pos[1]
-            apresenta_personagem = apresenta_personagem + 1
-            if(apresenta_personagem > 10):
+            print('coordenada_x:', click_pos[0])
+            print('coordenada_y:', click_pos[1])     
+            coordenada_x = click_pos[0]
+            coordenada_y = click_pos[1]
+            rodadas = rodadas + 1
+            if(rodadas >= 10):
                 screen.fill('black')
-                apresenta_personagem = 0
+                rodadas = 0
+                coordenada_x = 0
+                coordenada_y = 0
+            
+            if rodadas != 1:
+                if jogador_atual == personagem_x:
+                    jogador_atual = personagem_o
+                else:
+                    jogador_atual = personagem_x
+            else:  
+                jogador_atual = personagem_x      
+
 
  # desenha tabuleiro
 
@@ -46,33 +62,35 @@ while running:
 
     #primeira linha
     #
-    #                              x  y
-    if x > 0 and x < 200 and y < 200:
-        screen.blit(personagem_x,(70,20)) #primeiro
+    #                              coordenada_x  coordenada_y
+    if coordenada_x > 0 and coordenada_x < 200 and coordenada_y < 200:
+        screen.blit(jogador_atual,(70,20)) #primeiro
 
-    elif x >=  200 and x < 400 and y < 200:
-        screen.blit(personagem_y,(270,20)) #segundo
+    elif coordenada_x >=  200 and coordenada_x < 400 and coordenada_y < 200:
+        screen.blit(jogador_atual,(270,20)) #segundo
 
-    elif x >= 400 and y < 200:
-        screen.blit(personagem_y,(470,20)) #terceiro   
+    elif coordenada_x >= 400 and coordenada_y < 200:
+        screen.blit(jogador_atual,(470,20)) #terceiro   
 
-    elif x < 200 and y >= 200 and y < 400:
-        screen.blit(personagem_x,(70,220)) #quarto
+    elif coordenada_x < 200 and coordenada_y >= 200 and coordenada_y < 400:
+        screen.blit(jogador_atual,(70,220)) #quarto
 
-    elif x >= 200 and x < 400 and y >= 200 and y < 400:
-        screen.blit(personagem_y,(270,220)) #quinto
+    elif coordenada_x >= 200 and coordenada_x < 400 and coordenada_y >= 200 and coordenada_y < 400:
+        screen.blit(jogador_atual,(270,220)) #quinto
 
-    elif x >= 400 and y >= 200 and y < 400:
-        screen.blit(personagem_y,(470,220)) #sexto
+    elif coordenada_x >= 400 and coordenada_y >= 200 and coordenada_y < 400:
+        screen.blit(jogador_atual,(470,220)) #secoordenada_xto
 
-    elif x < 200 and y >= 400:
-        screen.blit(personagem_x,(70,420)) #setimo
+    elif coordenada_x < 200 and coordenada_y >= 400:
+        screen.blit(jogador_atual,(70,420)) #setimo
 
-    elif x >= 200 and x < 400 and y >= 400:
-        screen.blit(personagem_y,(270,420)) #oitavo
+    elif coordenada_x >= 200 and coordenada_x < 400 and coordenada_y >= 400:
+        screen.blit(jogador_atual,(270,420)) #oitavo
 
-    elif x >= 400 and y >= 400:
-        screen.blit(personagem_y,(470,420)) #nono
+    elif coordenada_x >= 400 and coordenada_y >= 400:
+        screen.blit(jogador_atual,(470,420)) #nono
+    
+    
     
     # flip() the display to put your work on screen
     pygame.display.flip()

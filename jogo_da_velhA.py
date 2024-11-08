@@ -97,11 +97,13 @@ def check_vencedor():
         pygame.draw.line(screen, 'pink' ,(300, 50), (300, 550), 10)
         status = True
     elif q3 == q6 == q9 != '':
-        pygame.draw.line(screen, 'pink' ,(550, 50), (550, 550), 10)
+        pygame.draw.line(screen, 'pink' ,(500, 50), (500, 550), 10)
         status = True
     elif q1 == q5 == q9 != '':
+        pygame.draw.line(screen, 'pink' ,(550, 550), (50, 50), 10)
         status = True
     elif q3 == q5 == q7 != '':
+        pygame.draw.line(screen, 'pink' ,(50, 550), (550, 50), 10)
         status = True      
     return status
 
